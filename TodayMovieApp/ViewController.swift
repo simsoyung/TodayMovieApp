@@ -13,8 +13,8 @@ class ViewController: UIViewController {
     
     struct Movie: Decodable {
         let rank: Int
-        let movieNm: String?
-        let openDt: String?
+        let movieNm: String
+        let openDt: String
         
     }
     let backgroundImage = UIImageView()
@@ -29,8 +29,6 @@ class ViewController: UIViewController {
         configureHierarchy()
         configureUI()
         configureLayout()
-        
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -84,23 +82,23 @@ class ViewController: UIViewController {
     func callrequest(){
         let date = textField.text
         let url = "\(URL.url)\(date ?? "20240606")"
-//        AF.request(url).responseDecodable(of: [Movie].self) { response in
-//            switch response.result {
-//            case .success(let value):
-//                self.movieList = value
-//                self.tableView.reloadData()
-//            case .failure( _):
-//                self.textField.text = "날짜를 입력해주세요"
-//            }
-//        }
-        AF.request(url).responseString { response in
+        AF.request(url).responseDecodable(of: [Movie].self) { response in
             switch response.result {
             case .success(let value):
-                print(value)
-            case .failure(let error):
-                print(error)
+                self.movieList = value
+                self.tableView.reloadData()
+            case .failure( _):
+                self.textField.text = "날짜를 입력해주세요"
             }
         }
+//        AF.request(url).responseString { response in
+//            switch response.result {
+//            case .success(let value):
+//                print(value)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
     
 }
@@ -114,7 +112,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.rankLabel.text = String(movieList[indexPath.row].rank)
         cell.nameLabel.text = movieList[indexPath.row].movieNm
         cell.dateLabel.text = movieList[indexPath.row].openDt
-            return cell
+        return cell
     }
 }
 
