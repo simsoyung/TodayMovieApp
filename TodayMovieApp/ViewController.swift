@@ -11,12 +11,6 @@ import SnapKit
 
 class ViewController: UIViewController {
     
-    struct Movie: Decodable {
-        let rank: Int
-        let movieNm: String
-        let openDt: String
-        
-    }
     let backgroundImage = UIImageView()
     let tableView = UITableView()
     let textField = UITextField()
@@ -95,23 +89,24 @@ class ViewController: UIViewController {
 //            switch response.result {
 //            case .success(let value):
 //                print(value)
+//                self.tableView.reloadData()
 //            case .failure(let error):
 //                print(error)
 //            }
 //        }
-    }
+}
     
 }
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movieList.count
+        return movieList[0].boxOfficeResult.dailyBoxOfficeList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
-        cell.rankLabel.text = String(movieList[indexPath.row].rank)
-        cell.nameLabel.text = movieList[indexPath.row].movieNm
-        cell.dateLabel.text = movieList[indexPath.row].openDt
+        cell.rankLabel.text = movieList[0].boxOfficeResult.dailyBoxOfficeList[indexPath.row].rank
+        cell.nameLabel.text = movieList[0].boxOfficeResult.dailyBoxOfficeList[indexPath.row].movieNm
+        cell.dateLabel.text = movieList[0].boxOfficeResult.dailyBoxOfficeList[indexPath.row].openDt
         return cell
     }
 }

@@ -45,11 +45,12 @@ class MovieTableViewCell: UITableViewCell {
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(20)
             make.leading.equalTo(rankLabel.snp.trailing).offset(20)
+            make.width.equalTo(80)
             make.height.equalTo(40)
         }
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(20)
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide).offset(-20)
+            make.trailing.equalToSuperview().offset(20)
             make.height.equalTo(40)
         }
     }
