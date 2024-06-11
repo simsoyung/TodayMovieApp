@@ -38,25 +38,26 @@ class MovieTableViewCell: UITableViewCell {
     }
     func configureLayout(){
         rankLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(20)
-            make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(20)
-            make.height.equalTo(40)
+            make.top.leading.equalTo(contentView.safeAreaLayoutGuide)
+            make.width.equalTo(80)
         }
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(20)
-            make.leading.equalTo(rankLabel.snp.trailing).offset(20)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide)
+            make.top.equalTo(rankLabel.snp.bottom)
             make.width.equalTo(80)
-            make.height.equalTo(40)
         }
         dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(20)
-            make.trailing.equalToSuperview().offset(20)
-            make.height.equalTo(40)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide)
+            make.top.equalTo(nameLabel.snp.bottom)
+            make.width.equalTo(80)
         }
     }
     func configureUI(){
         rankLabel.setRankLabel()
         nameLabel.setNameLabel()
         dateLabel.setDateLabel()
+        rankLabel.textColor = .black
+        nameLabel.textColor = .black
+        dateLabel.textColor = .black
     }
 }

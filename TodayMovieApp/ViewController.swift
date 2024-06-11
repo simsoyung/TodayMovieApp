@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     let textField = UITextField()
     let searchButton = UIButton()
     
-    var movieList: [Movie] = []
+    var movieList = Movie(boxOfficeResult: BoxOfficeResult(boxofficeType: "", showRange: "", dailyBoxOfficeList: []))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
-        tableView.rowHeight = 45
+        tableView.rowHeight = 120
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
         backgroundImage.image = UIImage(named: "background")
         backgroundImage.contentMode = .scaleToFill
@@ -74,9 +74,10 @@ class ViewController: UIViewController {
     
     @objc
     func callrequest(){
-        let date = textField.text
-        let url = "\(URL.url)\(date ?? "20240606")"
-        AF.request(url).responseDecodable(of: [Movie].self) { response in
+        let date = textField.text!
+        let url = "\(URL.url)\(date)"
+        AF.request(url).responseDecodable(of: Movie.self) { response in
+            print("\(self.movieList)")
             switch response.result {
             case .success(let value):
                 self.movieList = value
@@ -99,14 +100,18 @@ class ViewController: UIViewController {
 }
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movieList[0].boxOfficeResult.dailyBoxOfficeList.count
+        return movieList.boxOfficeResult.dailyBoxOfficeList.count
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as! MovieTableViewCell
-        cell.rankLabel.text = movieList[0].boxOfficeResult.dailyBoxOfficeList[indexPath.row].rank
-        cell.nameLabel.text = movieList[0].boxOfficeResult.dailyBoxOfficeList[indexPath.row].movieNm
-        cell.dateLabel.text = movieList[0].boxOfficeResult.dailyBoxOfficeList[indexPath.row].openDt
+        cell.rankLabel.text = movieList.boxOfficeResult.dailyBoxOfficeList[indexPath.row
+        ].rank
+        cell.nameLabel.text = movieList.boxOfficeResult.dailyBoxOfficeList[indexPath.row
+        ].movieNm
+        cell.dateLabel.text = movieList.boxOfficeResult.dailyBoxOfficeList[indexPath.row
+        ].openDt
         return cell
     }
 }
